@@ -1,0 +1,94 @@
+{% extends "admin_layout.html" %}
+
+{% block y %}
+{% if session.name %}
+<style>
+  #customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 99%;
+    margin: 5px;
+  }
+  
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+  }
+
+ 
+  input[type=text], select {
+    width: 20%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  input[type=submit] {
+    width: 10%;
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 6px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    
+  }
+  
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+  </style>
+
+    <form action="{{ url_for('users.pending_users') }}" method="post">
+    <table id="customers">
+      <tr>
+        <th>Activate</th>
+        <th>User ID</th>
+        <th>User Name</th>
+        <th>EMail ID</th>
+        <th>Account Number</th>
+        <th>Acc Balance</th>
+        <th>Activation Status</th>
+      </tr>
+      {% if messages %}
+      {% for row in data %}
+      <tr>
+        <td><input type="checkbox" name="input_userid" value="{{ row[0] }}"></td>
+          {% for cell in row %}
+          <td>{{ cell }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+      <h4 align="center">{{messages}}</h4>
+      {% endif %}
+      <h4 align="center">{{messages1}}</h4>
+     
+    </table>
+  
+    <input type="submit" formaction="/api/v1/approve-users" value="Approve" onclick="openPopup()">
+  </form>
+  </div> 
+ 
+<!-- partial -->
+  <script  src="/static/script.js"></script>
+{% else %}
+<meta http-equiv="refresh" content="2 ; url =/login" /> 
+	You are not Register. <a href="/login">login</a>.
+{% endif %}
+{% endblock %}
